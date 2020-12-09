@@ -11,8 +11,10 @@ board = [' ' for x in range(10)]
 # Secondly we need to create the board to play from, keeping this quite simple so its easier to work with going forward.
 
 def display_board(board):
-    print(board[1] + ' | ' + board[2] + ' | ' + board[3])
-    print('---------------')
-    print(board[4] + ' | ' + board[5] + ' | ' + board[6])
-    print('---------------')
-    print(board[7] + ' | ' + board[8] + ' | ' + board[9])
+    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
+    print('-----------')
+    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
+    print('-----------')
+    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
+
+print(display_board(board))
