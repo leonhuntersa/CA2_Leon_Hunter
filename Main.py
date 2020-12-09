@@ -31,10 +31,33 @@ def check_columns_win(pl, le):
            or pl[3] == le and pl[6] == le and pl[9] == le
 
 
+# checks each row for a win pl means place and le means letter
 def check_rows_win(pl, le):
     return pl[1] == le and pl[2] == le and pl[3] == le or pl[4] == le and pl[5] == le and pl[6] == le \
            or pl[7] == le and pl[8] == le and pl[9] == le
 
 
+# checks each diagonal for win pl means place and le means letter
 def check_cross_win(pl, le):
     return pl[1] == le and pl[5] == le and pl[9] == le or pl[7] == le and pl[5] == le and pl[3] == le
+
+
+# next we need to take user input and create a move. Human player will always be Xs for this game.
+def human_move():
+    # so while true the loop will run for the player.
+    run = True
+    while run:
+        # we then get input from user stored in a variable called choice.
+        choice = input("Please select a move using 1-9 (1 being top left)")
+        # we need to make sure that the choice is correct and matches.
+        try:
+            #if the input is integer when then check if the integer is between 0 and 10
+            choice = int(choice)
+            if 10 > choice or choice > 0:
+
+
+
+
+# to carry on with the human move we need to check another function first. This will be is the chosen space free?
+
+def check_space_is_free(place):
