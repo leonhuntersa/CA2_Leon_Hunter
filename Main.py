@@ -73,3 +73,32 @@ def human_move():
 def check_space_is_free(place):
     # checks the board and if the "place" is empty ' ' then we return space is free.
     return board[place] == ' '
+
+
+def get_board_copy(board):
+    # Make a copy of the board list and return it.
+    board_copy = []
+    for i in board:
+        board_copy.append(i)
+    return board_copy
+
+
+# we need to create the AI move next.
+def ai_move():
+    # free_moves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
+    # move = 0
+
+    # let ai letter always be O
+    ai_letter = 'O'
+
+    # for range 1-9
+    for i in range(1, 10):
+        # creates a copy of the board before printing to then make checks
+        board_copy = get_board_copy(board)
+        # checks free spaces
+        if check_space_is_free(board_copy, i):
+            # sets temporary letter in all free spaces
+            insert_letter(board_copy, ai_letter, i)
+
+        if check_columns_win or check_rows_win or check_cross_win(board_copy, ai_letter):
+            return i
