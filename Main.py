@@ -51,13 +51,25 @@ def human_move():
         choice = input("Please select a move using 1-9 (1 being top left)")
         # we need to make sure that the choice is correct and matches.
         try:
-            #if the input is integer when then check if the integer is between 0 and 10
+            # if the input is integer when then check if the integer is between 0 and 10
             choice = int(choice)
             if 10 > choice or choice > 0:
-
-
+                # so we then check if the space is free using the below function. if it is then we can pull out of
+                # the loop and run = false
+                if check_space_is_free(choice):
+                    run = False
+                else:
+                    # message to handle if space is full
+                    print('Space is full, please chose another move')
+            else:
+                # message to handle if number not in range eg '100'
+                print('Please select a number within the range')
+        except:
+            # last catch to make sure the user input a integer and not a word or any other symbols
+            print('Please type a number')
 
 
 # to carry on with the human move we need to check another function first. This will be is the chosen space free?
-
 def check_space_is_free(place):
+    # checks the board and if the "place" is empty ' ' then we return space is free.
+    return board[place] == ' '
