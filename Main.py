@@ -17,4 +17,24 @@ def display_board(board):
     print('-----------')
     print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
 
-print(display_board(board))
+
+# next I need to create a function to input a letter in the board.
+def insert_letter(letter, place):
+    board[place] = letter
+
+
+# so board position must equal to where the letter goes
+
+# before any move we need to check if there is a win condition so I need to create some checks for each possible win
+def check_columns_win(pl, le):
+    return pl[1] == le and pl[4] == le and pl[7] == le or pl[2] == le and pl[5] == le and pl[8] == le \
+           or pl[3] == le and pl[6] == le and pl[9] == le
+
+
+def check_rows_win(pl, le):
+    return pl[1] == le and pl[2] == le and pl[3] == le or pl[4] == le and pl[5] == le and pl[6] == le \
+           or pl[7] == le and pl[8] == le and pl[9] == le
+
+
+def check_cross_win(pl, le):
+    return pl[1] == le and pl[5] == le and pl[9] == le or pl[7] == le and pl[5] == le and pl[3] == le
