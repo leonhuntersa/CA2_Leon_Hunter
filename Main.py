@@ -102,3 +102,4 @@ def ai_move():
 
         if check_columns_win or check_rows_win or check_cross_win(board_copy, ai_letter):
             return i
+print(display_board)
