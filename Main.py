@@ -26,20 +26,15 @@ def insert_letter(letter, place):
 # so board position must equal to where the letter goes
 
 # before any move we need to check if there is a win condition so I need to create some checks for each possible win
-def check_columns_win(pl, le):
-    return pl[1] == le and pl[4] == le and pl[7] == le or pl[2] == le and pl[5] == le and pl[8] == le \
-           or pl[3] == le and pl[6] == le and pl[9] == le
-
-
-# checks each row for a win pl means place and le means letter
-def check_rows_win(pl, le):
-    return pl[1] == le and pl[2] == le and pl[3] == le or pl[4] == le and pl[5] == le and pl[6] == le \
-           or pl[7] == le and pl[8] == le and pl[9] == le
-
-
-# checks each diagonal for win pl means place and le means letter
-def check_cross_win(pl, le):
-    return pl[1] == le and pl[5] == le and pl[9] == le or pl[7] == le and pl[5] == le and pl[3] == le
+def check_win(pl, le):
+    return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
+    (bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle
+    (bo[1] == le and bo[2] == le and bo[3] == le) or # across the bottom
+    (bo[7] == le and bo[4] == le and bo[1] == le) or # down the left side
+    (bo[8] == le and bo[5] == le and bo[2] == le) or # down the middle
+    (bo[9] == le and bo[6] == le and bo[3] == le) or # down the right side
+    (bo[7] == le and bo[5] == le and bo[3] == le) or # diagonal
+    (bo[9] == le and bo[5] == le and bo[1] == le)) # diagonal
 
 
 # next we need to take user input and create a move. Human player will always be Xs for this game.
@@ -93,12 +88,12 @@ def ai_move():
         for i in possibleMoves:
             get_board_copy = board[:]
             get_board_copy[i] = let
-            if check_columns_win(boardCopy, let):
+            if check_win(boardCopy, let):
                 move = i
                 return move
 
 
-    #Try to take one of the corners
+    #Try to take one of the corners as this is the strongest move for the AI
     cornersOpen = []
     for i in possibleMoves:
         if i in [1,3,7,9]:
@@ -119,6 +114,48 @@ def ai_move():
             edgesOpen.append(i)
     
     if len(edgesOpen) > 0:
-        move = selectRandom(edgesOpen)
+        move = random_move(edgesOpen)
 
     return move
+
+# next we create a function to allow random selection for the AI. this imports random function file as well.
+def random_move(li):
+    import random
+    ln = len(li)
+    r = random.randrange(0, ln)
+    return li[r]
+
+# checks if board is full before move to determine if move available and if game is tied
+def check_board_full(board):
+    #checks to see how many blank spaces there are. if there is any it returns false for board being full
+    if board.count(' ') > 1:
+        return False
+    else:
+        return True
+
+# this is where the functions are put together to get the actual game.
+def main():
+    print('Lets Play Xs and Os')
+    display_board(board)
+
+    while not(check_board_full(board)):
+        if not(check_win(board, 'O')):
+            playerMove()
+            printBoard(board)
+        else:
+            print('Sorry, the AI won this time!')
+            break
+
+        if not(check_win(board, 'X')):
+            move = ai_move()
+            if move == 0:
+                print('Draw')
+            else:
+                insert_letter('O', move)
+                printBoard(board)
+        else:
+            print('You won! Good Job!')
+            break
+
+    if isBoardFull(board):
+        print('Draw!')
