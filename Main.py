@@ -140,8 +140,8 @@ def main():
 
     while not(check_board_full(board)):
         if not(check_win(board, 'O')):
-            playerMove()
-            printBoard(board)
+            human_move()
+            display_board(board)
         else:
             print('Sorry, the AI won this time!')
             break
@@ -152,10 +152,12 @@ def main():
                 print('Draw')
             else:
                 insert_letter('O', move)
-                printBoard(board)
+                display_board(board)
         else:
             print('You won! Good Job!')
             break
 
-    if isBoardFull(board):
+    if check_board_full(board):
         print('Draw!')
+
+
