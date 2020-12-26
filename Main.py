@@ -69,7 +69,7 @@ def human_move():
             print('Please type a number')
 
 
-# to carry on with the human move we need to check another function first. This will be is the chosen space free?
+# to carry on with the human move we need to check another function first. This will the chosen space be free?
 def check_space_is_free(place):
     # checks the board and if the "place" is empty ' ' then we return space is free.
     return board[place] == ' '
@@ -85,21 +85,40 @@ def get_board_copy(board):
 
 # we need to create the AI move next.
 def ai_move():
-    # free_moves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
-    # move = 0
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0] # Create a list of possible moves
+    move = 0
+    
+    #Check for possible winning move to take or to block opponents winning move
+    for let in ['O','X']:
+        for i in possibleMoves:
+            get_board_copy = board[:]
+            get_board_copy[i] = let
+            if check_columns_win(boardCopy, let):
+                move = i
+                return move
 
-    # let ai letter always be O
-    ai_letter = 'O'
 
-    # for range 1-9
-    for i in range(1, 10):
-        # creates a copy of the board before printing to then make checks
-        board_copy = get_board_copy(board)
-        # checks free spaces
-        if check_space_is_free(board_copy, i):
-            # sets temporary letter in all free spaces
-            insert_letter(board_copy, ai_letter, i)
+    #Try to take one of the corners
+    cornersOpen = []
+    for i in possibleMoves:
+        if i in [1,3,7,9]:
+            cornersOpen.append(i)
+    if len(cornersOpen) > 0:
+        move = selectRandom(cornersOpen)
+        return move
+    
+    #Try to take the center
+    if 5 in possibleMoves:
+        move = 5
+        return move
 
-        if check_columns_win or check_rows_win or check_cross_win(board_copy, ai_letter):
-            return i
-print(display_board)
+    #Take any edge
+    edgesOpen = []
+    for i in possibleMoves:
+        if i in [2,4,6,8]:
+            edgesOpen.append(i)
+    
+    if len(edgesOpen) > 0:
+        move = selectRandom(edgesOpen)
+
+    return move
